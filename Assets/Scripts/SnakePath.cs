@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SnakePath : MonoBehaviour
-{   public Transform prePath;
-    private float smooth = 0.3f;
-    public Vector3 cameraRotateOffset ;
+{   
+    public Transform prePath;
+    private float _smooth = 0.3f;
+    public Vector3 followDistantion ;
+
     private void FixedUpdate()
     {
-        Vector3 positionOffset = prePath.position - cameraRotateOffset;
-        positionOffset.z =  prePath.position.z;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, positionOffset, smooth);
+        Vector3 smoothedPosition = Vector3.Lerp(transform.position, prePath.position, _smooth);
         transform.position = smoothedPosition;
         transform.LookAt(prePath);
     }

@@ -1,15 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
+using System.Collections;
 using UnityEngine;
 
-public class Human : MonoBehaviour
+public class Human : Collide
 {
-    public Material material;
-    [SerializeField]
-    private MeshRenderer selfMeshRenderer;
-    public void SetColor(Material mat)
+    private Coroutine _moveToSnake;
+    private BodyColor _bodyColor;
+
+    public BodyColor BodyColor { get => _bodyColor; set => _bodyColor = new BodyColor(GetComponent<MeshRenderer>()); }
+
+    public void StartMoving(Transform target, float pullSpeed)
     {
-        material = mat;
-        selfMeshRenderer.material = material;
+      _moveToSnake =  StartCoroutine(Moving(target,pullSpeed));
+    }
+
+    private IEnumerator Moving(Transform target, float pullSpeed)
+    {
+        while (true)
+        {
+           transform.position = Vector3.MoveTowards(transform.position, target.position, pullSpeed * Time.deltaTime);
+           yield return null;
+        }
+    }
+
+    public override void Destroy(float time)
+    {
+        Destroy(gameObject, time); 
+        
+        
+    }
+    private void OnDestroy()
+    {   
+        if(_moveToSnake != null)
+        StopCoroutine(_moveToSnake);
     }
 }

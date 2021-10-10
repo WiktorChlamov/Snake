@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Colors : MonoBehaviour
 {
-    public Material one;
-    public Material two;
-    public Material three;
-    public Material four;
-    public Material five;
-    public Material six;
-    public static List<Material> materials;
+    [SerializeField] private Material _one;
+    [SerializeField] private Material _two;
+    [SerializeField] private Material _three;
+    [SerializeField] private Material _four;
+    [SerializeField] private Material _five;
+    [SerializeField] private Material _six;
+    private static List<Material> _materials;
+
+    public static List<Material> Materials { get => _materials;}
+
     private void Awake()
     {
-        materials = new List<Material>() { one, two,three,four,five,six};
+        _materials = new List<Material>() { _one, _two,_three,_four,_five,_six};
     }
 }
